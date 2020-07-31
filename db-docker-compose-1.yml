@@ -1,0 +1,34 @@
+version: '3.3'
+
+services:
+  postgres-scale-db:
+    image: localhost:5000/postgres-scale-db:latest
+    ports:
+    - "15432:5432"
+    volumes:
+      # use host directory for PostgreSQL data
+      # mount at standard postgresql location
+      # includes config and log files (they are in data)
+      - type: bind
+        source: <PATH-TO-EXTRACTED-DIR>/database/db/data
+        target: /var/lib/postgresql/data
+    environment:
+      - TZ='America/Los_Angeles'
+      - POSTGRES_USER=dbadmin
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100k"
+        max-file: "5"
+    networks:
+      - scale-db-network
+
+networks:
+  scale-db-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 175.16.237.0/24
