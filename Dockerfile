@@ -1,5 +1,5 @@
 # Dockerfile
-FROM postgres:16.3
+FROM postgres:16.4
 ENV POSTGRES_USER dbadmin
 ENV POSTGRES_DB postgres
 ENV POSTGRES_PASSWORD postgres
